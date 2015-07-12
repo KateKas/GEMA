@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Sobre";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+    <p>
+        PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS NÚCLEO DE EDUCAÇÃO A DISTÂNCIA
+    </p>
+
+    <p>
+        Trabalho de Conclusão de Curso de Especialização em Desenvolvimento de Aplicação Web como requisito parcial à obtenção do título de especialista.
+    </p>
+
+    <p>
+        Klaisler Antunes Santos
+    </p>
+    
+</article>
+
+<aside>
+    <h3>Professor orientador : </h3>
+    <p>
+        João Caram
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Sobre", "About", "Home")</li>
+        <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
+    </ul>
+</aside>

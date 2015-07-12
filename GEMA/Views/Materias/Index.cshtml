@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GEMA.Models.Materias>
+
+@{
+    ViewBag.Title = "Lista de matérias";
+}
+
+<h2>Lista de matérias</h2>
+@if (ViewBag.papel == "Jornalistas") {<text>
+<p>
+    <input type="button" value="Criar matéria" class="btn btn-info" onclick="location.href='@Url.Action("Create", "Materias")'" />
+</p></text>
+    }
+    <table class="table">
+        <tr>
+            @if (ViewBag.papel != "Gerentes")
+            {<text>
+                <th></th></text>
+            }
+            
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataMateria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Secoes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Condicao)
+            </th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                @if (ViewBag.papel != "Gerentes")
+                {<text>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.Id})" class="glyphicon glyphicon-pencil" title="Editar"></a>
+                    </td></text>
+                }
+                
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.Id})" class="glyphicon glyphicon-file" title="Detalhes"></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataMateria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Secoes.Secao)
+                </td>
+
+                <td>
+                    @if (item.Condicao == 1)
+                {<text><h4>
+                           <span class="label label-primary">Proposta</span>
+                        </h4>
+                </text>}
+            else if (item.Condicao == 2)
+            {<text><h4>
+                    <span class="label label-warning">Em revisão</span>
+                </h4>
+            </text>}
+            else if (item.Condicao == 3)
+            {<text><h4>
+                    <span class="label label-info">Aprovada</span>
+                </h4>
+            </text>}
+            else if (item.Condicao == 4)
+            {<text><h4><span class="label label-danger">Arquivada</span></h4></text>}                
+                else 
+            {<text><h4><span class="label label-success">Publicada</span></h4></text>}
+                </td>
+                </tr>
+        }  
+
+    </table>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Gestão de Matérias</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")       
+        @Scripts.Render("~/bundles/bootstrap")
+
+        <script type="text/javascript">
+        $(function () {
+            $("#tabs").tabs();
+        });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("GEMA - Gestão de Matérias", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Sobre", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
+                            @if (Request.IsAuthenticated) {
+                            <li>@Html.ActionLink("Matérias", "Index", "Materias")</li>}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - Klaisler Antunes Santos</p>
+                </div>
+            </div>
+        </footer>
+        @Scripts.Render("~/bundles/modernizr")
+       
+        @RenderSection("scripts", required: false)
+
+    </body>
+</html>

@@ -1,0 +1,111 @@
+﻿@model GEMA.Models.Materias
+
+@{
+    ViewBag.Title = "Detalhes da matéria";
+}
+
+<h2>Detalhes da matéria</h2>
+
+    <h4>Materias</h4>
+    <hr />
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabMateria">Matérias</a></li>
+            <li><a href="#tabEventos">Eventos</a></li>
+        </ul>
+            <div id="tabMateria">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Titulo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Titulo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Secoes)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Secoes.Secao)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Condicao)
+                    </dt>
+
+                    <dd>
+                        @if (Model.Condicao == 1)
+                    {<text><h4>
+                                <span class="label label-primary">Proposta</span>
+                            </h4>
+                    </text>}
+                    else if (Model.Condicao == 2)
+                    {<text><h4>
+                            <span class="label label-warning">Em revisão</span>
+                        </h4>
+                    </text>}
+                    else if (Model.Condicao == 3)
+                    {<text><h4>
+                               <span class="label label-info">Aprovada</span>
+                        </h4>
+                    </text>}
+                        else if (Model.Condicao == 4)
+                    {<text><h4><span class="label label-danger">Arquivada</span></h4></text>}
+                        else 
+                        {<text><h4><span class="label label-success">Publicada</span></h4></text>}
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Descricao)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DataMateria)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DataMateria)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Materia)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Materia)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Jornalistas)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Jornalistas.Nome)
+                    </dd>
+
+                </dl>
+            </div>
+
+            <div id="tabEventos">
+
+            </div>
+        </div>
+    
+        @* Comentarios *@
+        <div id="Comentarios">
+
+            @{Html.RenderAction("Comentarios", "Comentarios", new { Id = @Model.Id });}
+        </div>
+
+        <p>
+            @if (ViewBag.papel != "Gerentes")
+            {<text>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) | </text>
+            }
+            @Html.ActionLink("Voltar para lista", "Index")
+        </p>
