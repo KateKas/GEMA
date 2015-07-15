@@ -11,17 +11,13 @@ namespace GEMA.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("Título")]
-        [Required(ErrorMessage = "O campo título é obrigatorio.")]
-        public string Titulo { get; set; }
-
         [DisplayName("Comentário")]
         [Required(ErrorMessage = "O campo comentário é obrigatorio.")]
         public string Comentario { get; set; }
 
         [DisplayName("Data")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public System.DateTime DataComentario { get; set; }
 
         [DisplayName("Autor")]

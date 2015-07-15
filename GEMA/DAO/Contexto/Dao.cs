@@ -6,7 +6,7 @@ namespace GEMA.DAO.Contexto
     public class Dao : DbContext
     {
         public Dao()
-            : base("name=GEMA")
+            : base("name=DefaultConnection")
         {            
         }
 
@@ -19,7 +19,6 @@ namespace GEMA.DAO.Contexto
         public DbSet<Revisores> Revisores { get; set; }
         public DbSet<Secoes> Secoes { get; set; }
         public DbSet<Comentarios> Comentarios { get; set; }
-
         public DbSet<Papeis> Papeis { get; set; }
 
     }

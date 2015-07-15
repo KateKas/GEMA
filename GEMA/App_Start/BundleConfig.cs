@@ -43,6 +43,9 @@ namespace GEMA
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/redmond/css").Include(
+                       "~/Content/themes/redmond/jquery-ui-{version}.custom.css"));
         }
     }
 }

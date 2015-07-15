@@ -11,6 +11,7 @@ using GEMA.Models;
 
 namespace GEMA.Controllers
 {
+     [Authorize]
     public class PessoasController : Controller
     {
         private Dao db = new Dao();

@@ -10,6 +10,7 @@ namespace GEMA.FMK
         Proposta = 1,
         EmRevisao = 2, 
         Aprovada = 3,
-        Arquivada = 4
+        Arquivada = 4,
+        Publicada = 5
     }
 }

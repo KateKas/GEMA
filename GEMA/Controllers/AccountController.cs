@@ -328,6 +328,12 @@ namespace GEMA.Controllers
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
+        public ActionResult Denied(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

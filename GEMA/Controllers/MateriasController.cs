@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using GEMA.DAO.Contexto;
 using GEMA.Models;
 using GEMA.FMK;
+using GEMA.FMK.Security;
 
 namespace GEMA.Controllers
 {
@@ -59,7 +60,8 @@ namespace GEMA.Controllers
             return View(materias);
         }
 
-        // GET: Materias/Create
+        // GET: Materias/Create   
+        [PerfilFiltro(Roles = "Jornalistas")]
         public ActionResult Create()
         {
             ViewBag.IdSecao = new SelectList(db.Secoes, "Id", "Secao");
@@ -69,6 +71,7 @@ namespace GEMA.Controllers
         // POST: Materias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [PerfilFiltro(Roles = "Jornalistas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Titulo,Descricao,Materia")] Materias materias)
@@ -101,6 +104,7 @@ namespace GEMA.Controllers
         }
 
         // GET: Materias/Edit/5
+        [PerfilFiltro(Roles = "Jornalistas, Revisores, Publicadores")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -120,6 +124,7 @@ namespace GEMA.Controllers
         // POST: Materias/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [PerfilFiltro(Roles = "Jornalistas, Revisores, Publicadores")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Titulo,Descricao,DataMateria,Materia,Condicao")] Materias materias, string btnSalvar)
@@ -193,5 +198,31 @@ namespace GEMA.Controllers
 
             return true;
         }
+
+        //private static string CondicaoStatus(Condicao Status)
+        //{
+        //    // See http://go.microsoft.com/fwlink/?LinkID=177550 for
+        //    // a full list of status codes.
+        //    switch (Status)
+        //    {
+        //        case Condicao.Aprovada:
+        //            return "Aprovada";
+
+        //        case Condicao.Arquivada:
+        //            return "Arquivada";
+
+        //        case Condicao.EmRevisao:
+        //            return "Em revisão";
+
+        //        case Condicao.Proposta:
+        //            return "Proposta";
+
+        //        case Condicao.Publicada:
+        //            return "Publicada";
+
+        //        default:
+        //            return "NoStatus";
+        //    }
+        //}
     }
 }

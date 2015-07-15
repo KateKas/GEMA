@@ -4,15 +4,19 @@
         <meta charset="utf-8" />
         <title>@ViewBag.Title - Gestão de Matérias</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/jquery")       
+        <meta name="viewport" content="width=device-width" />        
+        @Scripts.Render("~/bundles/jquery")     
+        @Scripts.Render("~/bundles/jqueryui")  
         @Scripts.Render("~/bundles/bootstrap")
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/redmond/css")
+        @Styles.Render("~/Content/themes/base/css")
 
         <script type="text/javascript">
-        $(function () {
-            $("#tabs").tabs();
-        });
+            $(document).ready(function () {
+                $("#tabs").tabs();
+            });
+
         </script>
     </head>
     <body>

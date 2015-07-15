@@ -11,6 +11,7 @@ using GEMA.Models;
 
 namespace GEMA.Controllers
 {
+    [Authorize]
     public class ComentariosController : Controller
     {
         private Dao db = new Dao();
@@ -132,5 +133,29 @@ namespace GEMA.Controllers
         {
             return PartialView(db.Comentarios.Where(w => w.Materias.Id == Id).OrderByDescending(o=> o.DataComentario).ToList());
         }
+
+        // POST: Comentarios/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public ActionResult Comentarios([Bind(Include = "Comentario")] Comentarios comentarios, int Id)
+        {
+            //Comentarios comentarios = new Models.Comentarios ();
+            Materias materias = db.Materias.Find(Id);
+
+            if (ModelState.IsValid)
+            {                
+                comentarios.DataComentario = DateTime.Now;
+                comentarios.Pessoas = db.Pessoas.Where(w => w.Nome == User.Identity.Name).First();
+                comentarios.Materias = materias;
+                
+                db.Comentarios.Add(comentarios);
+                db.SaveChanges();
+                //return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Details", "Materias", new { id = Id });
+        }
+
     }
 }

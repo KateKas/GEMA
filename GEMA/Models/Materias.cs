@@ -25,7 +25,7 @@ namespace GEMA.Models
 
         [DisplayName("Data")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public System.DateTime DataMateria { get; set; }
 
         [DisplayName("Matéria")]

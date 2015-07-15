@@ -11,108 +11,107 @@ using GEMA.Models;
 
 namespace GEMA.Controllers
 {
-     [Authorize]
-    public class SecoesController : Controller
+    public class EventosController : Controller
     {
         private Dao db = new Dao();
 
-        // GET: Secoes
+        // GET: Eventos
         public ActionResult Index()
         {
-            return View(db.Secoes.ToList());
+            return View(db.Eventos.ToList());
         }
 
-        // GET: Secoes/Details/5
+        // GET: Eventos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Secoes secoes = db.Secoes.Find(id);
-            if (secoes == null)
+            Eventos eventos = db.Eventos.Find(id);
+            if (eventos == null)
             {
                 return HttpNotFound();
             }
-            return View(secoes);
+            return View(eventos);
         }
 
-        // GET: Secoes/Create
+        // GET: Eventos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Secoes/Create
+        // POST: Eventos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Descricao,Secao")] Secoes secoes)
+        public ActionResult Create([Bind(Include = "Id,Evento,DataEvento")] Eventos eventos)
         {
             if (ModelState.IsValid)
             {
-                db.Secoes.Add(secoes);
+                db.Eventos.Add(eventos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(secoes);
+            return View(eventos);
         }
 
-        // GET: Secoes/Edit/5
+        // GET: Eventos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Secoes secoes = db.Secoes.Find(id);
-            if (secoes == null)
+            Eventos eventos = db.Eventos.Find(id);
+            if (eventos == null)
             {
                 return HttpNotFound();
             }
-            return View(secoes);
+            return View(eventos);
         }
 
-        // POST: Secoes/Edit/5
+        // POST: Eventos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descricao,Secao")] Secoes secoes)
+        public ActionResult Edit([Bind(Include = "Id,Evento,DataEvento")] Eventos eventos)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(secoes).State = EntityState.Modified;
+                db.Entry(eventos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(secoes);
+            return View(eventos);
         }
 
-        // GET: Secoes/Delete/5
+        // GET: Eventos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Secoes secoes = db.Secoes.Find(id);
-            if (secoes == null)
+            Eventos eventos = db.Eventos.Find(id);
+            if (eventos == null)
             {
                 return HttpNotFound();
             }
-            return View(secoes);
+            return View(eventos);
         }
 
-        // POST: Secoes/Delete/5
+        // POST: Eventos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Secoes secoes = db.Secoes.Find(id);
-            db.Secoes.Remove(secoes);
+            Eventos eventos = db.Eventos.Find(id);
+            db.Eventos.Remove(eventos);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -124,6 +123,11 @@ namespace GEMA.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Eventos(int Id)
+        {
+            return PartialView(db.Eventos.Where(w => w.Materias.Id == Id).OrderByDescending(o => o.DataEvento).ToList());
         }
     }
 }
