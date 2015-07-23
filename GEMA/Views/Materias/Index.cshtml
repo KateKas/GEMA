@@ -5,6 +5,40 @@
 }
 
 <h2>Lista de matérias</h2>
+
+@using (Html.BeginForm("Index", "Materias"))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            @Html.Label("Filtrar por período:", new { @class = "text-info" })
+
+            @{  List<SelectListItem> ItensPeriodo = new List<SelectListItem>();
+                ItensPeriodo.Add(new SelectListItem { Text = "última semana", Value = "7" });
+                ItensPeriodo.Add(new SelectListItem { Text = "último mês", Value = "30" });
+                ItensPeriodo.Add(new SelectListItem { Text = "último ano", Value = "365" });
+            }
+
+           @Html.DropDownList("FiltroPeriodo", ItensPeriodo, "-- Selecione --")
+        </div>
+        <div class="col-lg-6">
+            @Html.Label("Filtrar por mais recentes:", new { @class = "text-info" })
+
+            @{  List<SelectListItem> ItensRecente = new List<SelectListItem>();
+                ItensRecente.Add(new SelectListItem { Text = "10 mais recentes", Value = "10" });
+                ItensRecente.Add(new SelectListItem { Text = "50 mais recentes", Value = "50" });             
+            }
+
+            @Html.DropDownList("FiltroRecente", ItensRecente, "-- Selecione --")
+        </div>
+
+        <div class="col-lg-2">
+            <input type="submit" value="Filtrar" class="btn bnt-primary" />
+        </div>
+    </div>
+}
+
+
+
 @if (ViewBag.papel == "Jornalistas") {<text>
 <p>
     <input type="button" value="Criar matéria" class="btn btn-info" onclick="location.href='@Url.Action("Create", "Materias")'" />
@@ -12,10 +46,7 @@
     }
     <table class="table">
         <tr>
-            @if (ViewBag.papel != "Gerentes")
-            {<text>
-                <th></th></text>
-            }
+           <th></th>
             
             <th></th>
             <th>
@@ -37,12 +68,13 @@
 
         @foreach (var item in Model) {
             <tr>
-                @if (ViewBag.papel != "Gerentes")
-                {<text>
-                    <td>
+                <td>
+                    @if (ViewBag.papel != "Gerentes" )
+                    {<text>
                         <a href="@Url.Action("Edit", new { id = item.Id})" class="glyphicon glyphicon-pencil" title="Editar"></a>
-                    </td></text>
-                }
+                    </text>
+                    }
+                </td>
                 
                 <td>
                     <a href="@Url.Action("Details", new { id = item.Id})" class="glyphicon glyphicon-file" title="Detalhes"></a>

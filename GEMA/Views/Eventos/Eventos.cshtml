@@ -1,0 +1,21 @@
+﻿@model IEnumerable<GEMA.Models.Eventos>
+
+<table class="table table-striped">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-2">
+                        <h4>@Html.DisplayFor(modelItem => item.Pessoas.Nome)</h4>
+                        <p>@Html.DisplayFor(modelItem => item.DataEvento)</p>
+                    </div>
+                    <div class="col-md-10">@Html.DisplayFor(modelItem => item.Evento)</div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+

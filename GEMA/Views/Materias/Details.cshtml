@@ -6,7 +6,7 @@
 
 <h2>Detalhes da matéria</h2>
 
-    <h4>Materias</h4>
+    <h4>Matérias</h4>
     <hr />
 
     <div id="tabs">
@@ -88,6 +88,21 @@
                         @Html.DisplayFor(model => model.Jornalistas.Nome)
                     </dd>
 
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Revisores)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Revisores.Nome)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Publicadores)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Publicadores.Nome)
+                    </dd>
                 </dl>
             </div>
 

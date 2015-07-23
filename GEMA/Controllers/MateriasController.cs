@@ -43,6 +43,40 @@ namespace GEMA.Controllers
             }           
         }
 
+        [HttpPost]
+        public ActionResult Index(string FiltroPeriodo, string FiltroRecente)
+        {
+            string papel = db.Pessoas.Where(w => w.Nome == User.Identity.Name).Select(s => s.Papeis.Papel).First();
+            ViewBag.Papel = papel;
+
+            DateTime periodo = DateTime.Today.AddYears(-10);
+            int recentes = 100;
+
+            if (!String.IsNullOrEmpty(FiltroPeriodo))
+                periodo =  DateTime.Today.AddDays(-int.Parse(FiltroPeriodo));
+
+            if (!String.IsNullOrEmpty(FiltroRecente))
+                recentes = int.Parse(FiltroRecente);
+
+            switch (papel)
+            {
+                case "Jornalistas":
+                    return View(db.Materias.Where(w => w.Jornalistas.Nome == User.Identity.Name && w.DataMateria >= periodo).OrderByDescending(o => o.DataMateria).Take(recentes).ToList());
+
+                case "Gerentes":
+                    return View(db.Materias.Where(w => w.Gerentes.Nome == User.Identity.Name && w.DataMateria >= periodo).OrderByDescending(o => o.DataMateria).Take(recentes).ToList());
+
+                case "Revisores":
+                    return View(db.Materias.Where(w => w.Condicao == 1 || w.Condicao == 2 && w.DataMateria >= periodo).OrderByDescending(o => o.DataMateria).Take(recentes).ToList());
+
+                case "Publicadores":
+                    return View(db.Materias.Where(w => w.Condicao == 3 && w.DataMateria >= periodo).OrderByDescending(o => o.DataMateria).Take(recentes).ToList());
+
+                default:
+                    return View();
+            }         
+        }
+
         // GET: Materias/Details/5
         public ActionResult Details(int? id)
         {
