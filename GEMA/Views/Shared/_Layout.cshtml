@@ -15,6 +15,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#tabs").tabs();
+                $("select").addClass("form-control");
             });
 
         </script>
@@ -35,7 +36,8 @@
                             <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                             <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
                             @if (Request.IsAuthenticated) {
-                            <li>@Html.ActionLink("Matérias", "Index", "Materias")</li>}
+                            <li>@Html.ActionLink("Matérias", "Index", "Materias")</li>
+                            <li>@Html.ActionLink("Pessoas", "Index", "Pessoas")</li>}
                         </ul>
                     </nav>
                 </div>

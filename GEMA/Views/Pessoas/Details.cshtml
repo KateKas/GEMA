@@ -1,10 +1,10 @@
 ﻿@model GEMA.Models.Pessoas
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Details</h2>
+<h2>detalhes</h2>
 
 <div>
     <h4>Pessoas</h4>
@@ -18,9 +18,17 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Papeis.Papel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Papeis.Papel)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar para lista", "Index")
 </p>

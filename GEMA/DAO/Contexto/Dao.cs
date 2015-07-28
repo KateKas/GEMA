@@ -20,6 +20,7 @@ namespace GEMA.DAO.Contexto
         public DbSet<Secoes> Secoes { get; set; }
         public DbSet<Comentarios> Comentarios { get; set; }
         public DbSet<Papeis> Papeis { get; set; }
+        //public DbSet<UserProfile> UserProfile { get; set; }
 
     }
 }

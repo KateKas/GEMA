@@ -1,31 +1,47 @@
 ﻿@model IEnumerable<GEMA.Models.Pessoas>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de pessoas";
 }
 
-<h2>Index</h2>
+<h2>Lista de pessoas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="button" value="Criar pessoa" class="btn btn-info" onclick="location.href='@Url.Action("Create", "Pessoas")'" />
 </p>
 <table class="table">
     <tr>
         <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Papeis.Papel)
+        </th>
+       <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            <a href="@Url.Action("Edit", new { id = item.Id})" class="glyphicon glyphicon-pencil" title="Editar" ></a>
+        </td>
+        <td>
+            <a href="@Url.Action("Details", new { id = item.Id })" class="glyphicon glyphicon-file" title="Detalhes"></a>
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.Papeis.Papel)
+        </td>
+        <td>    
+            <a href="@Url.Action("Delete", new { id = item.Id })" class="glyphicon glyphicon-remove" style="color:darkred" title="Excluir"></a>       
         </td>
     </tr>
 }

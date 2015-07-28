@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using GEMA.DAO.Contexto;
 using GEMA.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace GEMA.Controllers
 {
@@ -40,6 +42,7 @@ namespace GEMA.Controllers
         // GET: Pessoas/Create
         public ActionResult Create()
         {
+            ViewBag.IdPapel = new SelectList(db.Papeis, "Id", "Papel");
             return View();
         }
 
@@ -48,15 +51,51 @@ namespace GEMA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome")] Pessoas pessoas)
+        public ActionResult Create([Bind(Include = "Id,Nome")] Pessoas pessoas, string Senha)
         {
             if (ModelState.IsValid)
             {
-                db.Pessoas.Add(pessoas);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    //Pega a seção
+                    Papeis papel = db.Papeis.Find(int.Parse(Request["IdPapel"]));
+
+                    WebSecurity.CreateUserAndAccount(pessoas.Nome, Senha);
+
+                    switch (papel.Papel)
+                    {
+                        case "Jornalistas":
+                            Jornalistas jornalista = new Jornalistas { Nome = pessoas.Nome, Papeis = papel };
+                            db.Jornalistas.Add(jornalista);
+                            break;
+                        case "Gerentes":
+                            Gerentes gerentes = new Gerentes { Nome = pessoas.Nome, Papeis = papel };
+                            db.Gerentes.Add(gerentes);
+                            break;
+                        case "Revisores":
+                            Revisores revisores = new Revisores { Nome = pessoas.Nome, Papeis = papel };
+                            db.Revisores.Add(revisores);
+                            break;
+                        case "Publicadores":
+                            Publicadores publicadores = new Publicadores { Nome = pessoas.Nome, Papeis = papel };
+                            db.Publicadores.Add(publicadores);
+                            break;
+                        //default:
+                        //    break;
+                    }
+
+                    //db.Pessoas.Add(pessoas);
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index");                   
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", AccountController.ErrorCodeToString(e.StatusCode));
+                }
             }
 
+            ViewBag.IdPapel = new SelectList(db.Papeis, "Id", "Papel");
             return View(pessoas);
         }
 
