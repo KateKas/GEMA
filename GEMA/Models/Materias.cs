@@ -34,6 +34,12 @@ namespace GEMA.Models
         [DisplayName("Condição")]
         public int Condicao { get; set; }
 
+        [DisplayName("Aprovar")]
+        public int Aprovar { get; set; }
+
+        [DisplayName("Arquivar")]
+        public int Arquivar { get; set; }
+
         [DisplayName("Seção")]
         public virtual Secoes Secoes { get; set; }
 

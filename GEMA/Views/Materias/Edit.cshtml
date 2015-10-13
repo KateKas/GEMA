@@ -17,6 +17,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Condicao)
+        @Html.HiddenFor(model => model.Aprovar)
+        @Html.HiddenFor(model => model.Arquivar)
+        @Html.HiddenFor(model => model.Revisores)
+        @Html.HiddenFor(model => model.Publicadores)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,11 +56,18 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @if ((Model.Condicao == 1 || Model.Condicao == 2 && Model.Jornalistas.Nome == User.Identity.Name) || (Model.Condicao == 1 || Model.Condicao == 2 && (Model.Revisores == null || Model.Revisores.Nome == User.Identity.Name)))
+                @if ((Model.Condicao == 1 || Model.Condicao == 2 && Model.Jornalistas.Nome == User.Identity.Name) 
+                    || (Model.Condicao == 1 || Model.Condicao == 2 && (Model.Revisores == null || Model.Revisores.Nome == User.Identity.Name)))
                 {<text>
-                <input type="submit" value="Salvar" class="btn btn-success" name="btnsalvar" />                    
-                <input type="submit" value="Aprovar" class="btn btn-primary" name="btnsalvar" />
+                <input type="submit" value="Salvar" class="btn btn-success" name="btnsalvar" /> 
+                @if ((Model.Aprovar != 1 && Model.Jornalistas.Nome == User.Identity.Name) || (Model.Aprovar != 2 && (Model.Revisores == null || Model.Revisores.Nome == User.Identity.Name)))
+                {                 
+                    <input type="submit" value="Aprovar" class="btn btn-primary" name="btnsalvar" />
+                }
+                @if ((Model.Arquivar != 1 && Model.Jornalistas.Nome == User.Identity.Name) || (Model.Arquivar != 2 && (Model.Revisores == null || Model.Revisores.Nome == User.Identity.Name)))
+                {
                 <input type="submit" value="Arquivar" class="btn btn-danger" name="btnsalvar" />
+                }
                 </text>}
                 else if (Model.Condicao == 3 && Model.Publicadores == null || Model.Publicadores.Nome == User.Identity.Name)
                 { 

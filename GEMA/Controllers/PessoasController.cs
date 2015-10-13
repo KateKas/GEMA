@@ -57,10 +57,8 @@ namespace GEMA.Controllers
             {
                 try
                 {
-                    //Pega a seção
+                    //Pega o papel
                     Papeis papel = db.Papeis.Find(int.Parse(Request["IdPapel"]));
-
-                    WebSecurity.CreateUserAndAccount(pessoas.Nome, Senha);
 
                     switch (papel.Papel)
                     {
@@ -80,12 +78,9 @@ namespace GEMA.Controllers
                             Publicadores publicadores = new Publicadores { Nome = pessoas.Nome, Papeis = papel };
                             db.Publicadores.Add(publicadores);
                             break;
-                        //default:
-                        //    break;
                     }
 
-                    //db.Pessoas.Add(pessoas);
-
+                    WebSecurity.CreateUserAndAccount(pessoas.Nome, Senha);
                     db.SaveChanges();
                     return RedirectToAction("Index");                   
                 }

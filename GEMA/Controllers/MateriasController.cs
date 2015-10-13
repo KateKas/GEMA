@@ -126,7 +126,7 @@ namespace GEMA.Controllers
                 db.Materias.Add(materias);
 
                 //Cria o evento
-                Eventos evento = new Eventos { DataEvento = DateTime.Now, Evento = "Envio incial", Materias = materias, Pessoas = materias.Jornalistas };
+                Eventos evento = new Eventos { DataEvento = DateTime.Now, Evento = "Envio inicial", Materias = materias, Pessoas = materias.Jornalistas };
                 db.Eventos.Add(evento);
 
                 db.SaveChanges();
@@ -161,7 +161,7 @@ namespace GEMA.Controllers
         [PerfilFiltro(Roles = "Jornalistas, Revisores, Publicadores")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Descricao,DataMateria,Materia,Condicao")] Materias materias, string btnSalvar)
+        public ActionResult Edit([Bind(Include = "Id,Titulo,Descricao,DataMateria,Materia,Condicao,Aprovar,Arquivar")] Materias materias, string btnSalvar)
         {
             if (ModelState.IsValid)
             {
@@ -180,15 +180,80 @@ namespace GEMA.Controllers
                     materias.Publicadores = db.Publicadores.Where(w => w.Nome == User.Identity.Name).First();
                 }
 
+                // Se Aprovar == 0 => ninguém aprovou
+                // Se Aprovar == 1 => jornalista aprovou, no aguardo da aprovação do revisor
+                // Se Aprovar == 2 => revisor aprovou, no aguardo da aprovação do jornalista
+                // Se Aprovar == 3 => ambos aprovaram
                 if (btnSalvar == "Aprovar")
                 {
-                    materias.Condicao = 3;
-                    evento.Evento = "Aprovação";
+                    if (papel == "Jornalistas")
+                    {
+                        if (materias.Aprovar == 0)
+                        {
+                            materias.Aprovar = 1;
+                            evento.Evento = "Matéria aprovada pelo jornalista";
+                        }
+                        else if (materias.Aprovar == 2)
+                        {
+                            materias.Aprovar = 3;
+                            materias.Condicao = 3;
+                            evento.Evento = "Matéria aprovada pelo jornalista e pelo revisor";
+                        }
+                    }
+                    else if (papel == "Revisores")
+                    {
+                        if (materias.Aprovar == 0)
+                        {
+                            materias.Aprovar = 2;
+                            evento.Evento = "Matéria aprovada pelo revisor";
+                        }
+                        else if (materias.Aprovar == 1)
+                        {
+                            materias.Aprovar = 3;
+                            materias.Condicao = 3;
+                            evento.Evento = "Matéria aprovada pelo revisor e pelo jornalista";
+                        }
+                    }
+                    //materias.Condicao = 3;
+                    //evento.Evento = "Aprovação";
                 }
+
+                // Se Arquivar == 0 => ninguém arquivou
+                // Se Arquivar == 1 => jornalista arquivou, no aguardo do revisor arquivar a matéria
+                // Se Arquivar == 2 => revisor arquivou, no aguardo do jornalista arquivar a matéria
+                // Se Arquivar == 3 => ambos arquivaram
                 else if (btnSalvar == "Arquivar")
                 {
-                    materias.Condicao = 4;
-                    evento.Evento = "Arquivamento";
+                    if (papel == "Jornalistas")
+                    {
+                        if (materias.Arquivar == 0)
+                        {
+                            materias.Arquivar = 1;
+                            evento.Evento = "Matéria arquivada pelo jornalista";
+                        }
+                        else if (materias.Arquivar == 2)
+                        {
+                            materias.Arquivar = 3;
+                            materias.Condicao = 3;
+                            evento.Evento = "Matéria arquivada pelo jornalista e pelo revisor";
+                        }
+                    }
+                    else if (papel == "Revisores")
+                    {
+                        if (materias.Arquivar == 0)
+                        {
+                            materias.Arquivar = 2;
+                            evento.Evento = "Matéria arquivada pelo revisor";
+                        }
+                        else if (materias.Arquivar == 1)
+                        {
+                            materias.Arquivar = 3;
+                            materias.Condicao = 4;
+                            evento.Evento = "Matéria arquivada pelo revisor e pelo jornalista";
+                        }
+                    }
+                    //materias.Condicao = 4;
+                    //evento.Evento = "Arquivamento";
                 }
                 else if (btnSalvar == "Publicar")
                 {
@@ -202,7 +267,6 @@ namespace GEMA.Controllers
                 }
 
                 db.Entry(materias).State = EntityState.Modified;
-               
                 db.Eventos.Add(evento);
 
                 db.SaveChanges();
