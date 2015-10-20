@@ -58,7 +58,7 @@ namespace GEMA.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "Nome de usuário")]
+        [Display(Name = "Usuário")]
         public string UserName { get; set; }
 
         [Required]
