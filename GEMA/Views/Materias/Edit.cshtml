@@ -69,7 +69,7 @@
                 <input type="submit" value="Arquivar" class="btn btn-danger" name="btnsalvar" />
                 }
                 </text>}
-                else if (Model.Condicao == 3 && Model.Publicadores == null || Model.Publicadores.Nome == User.Identity.Name)
+                else if (Model.Condicao == 3 && (Model.Publicadores == null && Model.Jornalistas.Nome != User.Identity.Name && Model.Revisores.Nome != User.Identity.Name))
                 { 
                    <text>
                 <input type="submit" value="Publicar" class="btn btn-success" name="btnsalvar" /> </text>
